@@ -9,12 +9,23 @@ import { EventDetailPage } from './pages/EventDetailPage';
 import { CreateEventPage } from './pages/CreateEventPage';
 import { RegistrationPage } from './pages/Registration/RegistrationPage';
 import NotFoundPage from './pages/NotFoundPage';
+import { LoginPage } from './pages/Login/LoginPage';
+import { UsersPage } from './pages/Login/Users/UsersPage';
+import { isAuthenticated } from './services/loginService/loginService';
+import { Navigate, useLocation } from 'react-router-dom';
+
+function ProtectedRoute() {
+  const location = useLocation();
+  return isAuthenticated() ? <App /> : <Navigate to="/login" replace state={{ from: location }} />;
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route element={<App />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/registro" element={<UsersPage />} />
+        <Route element={<ProtectedRoute />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/events/:id" element={<EventDetailPage />} />

@@ -36,41 +36,45 @@ export default [
         version: "detect"
       },
       "import/resolver": {
+        alias: {
+          map: [["@", "./src"]],
+          extensions: [".js", ".jsx"]
+        },
         node: {
           extensions: [".js", ".jsx"]
         }
-      }
-    },
-    rules: {
-      /* JavaScript esencial */
-      "no-undef": "error",
-      "no-unused-vars": ["error", {
-        vars: "all",
-        args: "after-used",
-        ignoreRestSiblings: true
-      }],
-      "no-unreachable": "error",
-      "no-const-assign": "error",
-      "no-redeclare": "error",
-      "no-dupe-keys": "error",
-      "no-dupe-args": "error",
-      "no-irregular-whitespace": "error",
+      }, rules: {
+        /* JavaScript esencial */
+        "no-undef": "error",
+        "no-unused-vars": ["error", {
+          vars: "all",
+          args: "after-used",
+          ignoreRestSiblings: true
+        }],
+        "no-unreachable": "error",
+        "no-const-assign": "error",
+        "no-redeclare": "error",
+        "no-dupe-keys": "error",
+        "no-dupe-args": "error",
+        "no-irregular-whitespace": "error",
 
-      /* React esencial */
-      "react/jsx-no-undef": "error",
-      "react/jsx-key": "error",
-      "react/no-unknown-property": "error",
-      "react/self-closing-comp": "warn",
-      /* Hooks */
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-      /* Fast Refresh / Vite */
-      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-      /* Imports */
-      "import/no-unresolved": "error",
-      "import/named": "error",
-      "import/default": "error",
-      "import/no-duplicates": "warn"
+        /* React esencial */
+        "react/jsx-no-undef": "error",
+        "react/jsx-key": "error",
+        "react/no-unknown-property": "error",
+        "react/self-closing-comp": "warn",
+        /* Hooks */
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        /* Fast Refresh / Vite */
+        "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+        /* Imports */
+        "import/no-unresolved": "error",
+        "import/named": "error",
+        "import/default": "error",
+        "import/no-duplicates": "warn"
+      }
     }
   }
 ];
+
