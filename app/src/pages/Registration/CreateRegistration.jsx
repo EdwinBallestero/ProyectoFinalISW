@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -129,3 +130,9 @@ export function CreateRegistration({ open, onOpenChange, onCreated }) {
 		</Dialog>
 	);
 }
+
+CreateRegistration.propTypes = {
+	open: PropTypes.bool.isRequired,
+	onOpenChange: PropTypes.func.isRequired,
+	onCreated: PropTypes.func.isRequired,
+};
