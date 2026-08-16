@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, CalendarDays } from "lucide-react";
+import { Sun, Moon, CalendarDays, LogOut } from "lucide-react";
+import { logoutUser } from "@/services/loginService/loginService";
 
 export function Navbar() {
+    const navigate = useNavigate();
     const [darkMode, setDarkMode] = useState(false);
     const linkClass = ({ isActive }) =>
         isActive
@@ -16,6 +18,11 @@ export function Navbar() {
 
     function toggleTheme() {
         setDarkMode((prev) => !prev);
+    }
+
+    function handleLogout() {
+        logoutUser();
+        navigate("/login", { replace: true });
     }
 
     return (
@@ -57,6 +64,15 @@ export function Navbar() {
                         ) : (
                             <Moon className="h-5 w-5" />
                         )}
+                    </Button>
+                    <Button
+                        variant="outline"
+                        onClick={handleLogout}
+                        aria-label="Cerrar sesión"
+                        className="gap-2 rounded-full border-border bg-background hover:bg-accent hover:text-accent-foreground"
+                    >
+                        <LogOut className="h-4 w-4" />
+                        <span className="hidden sm:inline">Cerrar sesión</span>
                     </Button>
                 </div>
             </nav>
