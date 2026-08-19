@@ -15,9 +15,11 @@ export class RegistrationController {
     };
 
     obtenerPorUsuario = async (request: Request, response: Response, next: NextFunction) => {
-        const userId = parseId(request.params.userId);
+        const userName = Array.isArray(request.params.userName)
+            ? request.params.userName[0]
+            : request.params.userName;
 
-        const registrations = await registrationService.obtenerPorUsuario(userId);
+        const registrations = await registrationService.obtenerPorUsuario(userName ?? "");
 
         return response.status(StatusCodes.OK).json({
             success: true,
@@ -26,9 +28,11 @@ export class RegistrationController {
     };
 
     obtenerPorEvento = async (request: Request, response: Response, next: NextFunction) => {
-        const eventId = parseId(request.params.eventId);
+        const eventTitle = Array.isArray(request.params.eventTitle)
+            ? request.params.eventTitle[0]
+            : request.params.eventTitle;
 
-        const registrations = await registrationService.obtenerPorEvento(eventId);
+        const registrations = await registrationService.obtenerPorEvento(eventTitle ?? "");
 
         return response.status(StatusCodes.OK).json({
             success: true,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { CalendarDays, Clock3, Eye, Info, Mail, MapPin, Pencil, Plus, Ticket, Trash2, UserRound } from "lucide-react";
+import { CalendarDays, Clock3, Eye, Info, Mail, MapPin, Pencil, Plus, Ticket, UserRound } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,7 +33,7 @@ export function RegistrationPage() {
     const [selectedRegistration, setSelectedRegistration] = useState(null);
     const [dialog, setDialog] = useState(null);
     const [createOpen, setCreateOpen] = useState(false);
-    const [registrationId, setRegistrationId] = useState("");
+    const [registrationSearch, setRegistrationSearch] = useState("");
     const [loading, setLoading] = useState(false);
 
     async function loadRegistrations() {
@@ -52,15 +52,15 @@ export function RegistrationPage() {
         loadRegistrations();
     }, []);
 
-    async function handleGetById(type) {
-        if (!registrationId.trim()) {
-            toast.error(`Ingrese el ID del ${type === "event" ? "evento" : "usuario"}.`);
+    async function handleGetByName(type) {
+        if (!registrationSearch.trim()) {
+            toast.error(`Ingrese el nombre del ${type === "event" ? "evento" : "usuario"}.`);
             return;
         }
         try {
             const response = type === "event"
-                ? await getRegistrationsByEvent(registrationId)
-                : await getRegistrationsByUser(registrationId);
+                ? await getRegistrationsByEvent(registrationSearch.trim())
+                : await getRegistrationsByUser(registrationSearch.trim());
             const data = response?.data ?? response ?? [];
             const registrationsFound = Array.isArray(data) ? data : [data];
             if (registrationsFound.length === 0) {
@@ -99,17 +99,16 @@ export function RegistrationPage() {
                 <CardContent className="flex flex-col gap-3 sm:flex-row sm:items-center">
                     <div className="flex flex-1 gap-2">
                         <Input
-                            value={registrationId}
-                            onChange={(event) => setRegistrationId(event.target.value)}
-                            type="number"
-                            min="1"
-                            placeholder="ID de evento o usuario"
-                            aria-label="ID de evento o usuario"
+                            value={registrationSearch}
+                            onChange={(event) => setRegistrationSearch(event.target.value)}
+                            type="search"
+                            placeholder="Nombre de evento o usuario"
+                            aria-label="Nombre de evento o usuario"
                         />
-                        <Button variant="outline" onClick={() => handleGetById("event")}>
+                        <Button variant="outline" onClick={() => handleGetByName("event")}>
                             <Eye /> Por evento
                         </Button>
-                        <Button variant="outline" onClick={() => handleGetById("user")}>
+                        <Button variant="outline" onClick={() => handleGetByName("user")}>
                             <Eye /> Por usuario
                         </Button>
                     </div>
