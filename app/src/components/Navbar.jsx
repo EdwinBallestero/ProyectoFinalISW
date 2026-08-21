@@ -54,6 +54,15 @@ export function Navbar() {
                     </NavLink>
                     <Button
                         variant="outline"
+                        onClick={handleLogout}
+                        aria-label="Cerrar sesión"
+                        className="gap-2 rounded-full border-border bg-background hover:bg-accent hover:text-accent-foreground"
+                    >
+                        <LogOut className="h-4 w-4" />
+                        <span className="hidden sm:inline">Cerrar sesión</span>
+                    </Button>
+                    <Button
+                        variant="outline"
                         size="icon"
                         onClick={toggleTheme}
                         aria-label="Cambiar tema"
@@ -64,15 +73,6 @@ export function Navbar() {
                         ) : (
                             <Moon className="h-5 w-5" />
                         )}
-                    </Button>
-                    <Button
-                        variant="outline"
-                        onClick={handleLogout}
-                        aria-label="Cerrar sesión"
-                        className="gap-2 rounded-full border-border bg-background hover:bg-accent hover:text-accent-foreground"
-                    >
-                        <LogOut className="h-4 w-4" />
-                        <span className="hidden sm:inline">Cerrar sesión</span>
                     </Button>
                 </div>
             </nav>

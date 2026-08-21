@@ -21,12 +21,12 @@ export function getRegistrations() {
     return request("/registrations");
 }
 
-export function getRegistrationsByUser(userId) {
-    return request(`/registrations/user/${userId}`);
+export function getRegistrationsByUser(userName) {
+    return request(`/registrations/user/${encodeURIComponent(userName)}`);
 }
 
-export function getRegistrationsByEvent(eventId) {
-    return request(`/registrations/event/${eventId}`);
+export function getRegistrationsByEvent(eventTitle) {
+    return request(`/registrations/event/${encodeURIComponent(eventTitle)}`);
 }
 
 export function getRegistrationEvents() {

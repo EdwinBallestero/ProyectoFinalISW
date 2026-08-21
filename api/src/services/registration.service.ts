@@ -14,11 +14,18 @@ export const registrationService = {
         });
     },
 
-    async obtenerPorUsuario(userId: number) {
+    async obtenerPorUsuario(userName: string) {
         return await prisma.registration.findMany({
-            where: { userId },
+            where: {
+                user: {
+                    fullName: {
+                        contains: userName,
+                    },
+                },
+            },
             include: {
                 event: true,
+                user: true,
                 status: true,
             },
             orderBy: {
@@ -27,10 +34,17 @@ export const registrationService = {
         });
     },
 
-    async obtenerPorEvento(eventId: number) {
+    async obtenerPorEvento(eventTitle: string) {
         return await prisma.registration.findMany({
-            where: { eventId },
+            where: {
+                event: {
+                    title: {
+                        contains: eventTitle,
+                    },
+                },
+            },
             include: {
+                event: true,
                 user: true,
                 status: true,
             },

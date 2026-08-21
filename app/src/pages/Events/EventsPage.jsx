@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { EventList } from "../components/EventList";
-import { getEvents } from "../services/eventsService";
+import { EventList } from "@/components/Events/EventList";
+import { getEvents } from "@/services/eventsService";
 import { PageHeader } from "@/components/PageHeader";
 import { SearchBar } from "@/components/SearchBar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -56,7 +56,12 @@ export function EventsPage() {
                 isBadge={true}
             />
 
-            <SearchBar value={search} onChange={setSearch} />
+            <SearchBar 
+                value={search} 
+                onChange={setSearch} 
+                placeholder="Buscar por evento"
+            />
+            
             {filteredEvents.length === 0 ? (
                 <p className="text-center text-muted-foreground">
                     No hay resultados

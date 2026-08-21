@@ -28,44 +28,44 @@ export class RegistrationRoutes {
         );
         /**
          * @swagger
-         * /registrations/user/{userId}:
+         * /registrations/user/{userName}:
          *   get:
          *     summary: Obtener inscripciones por usuario
          *     tags: [Registrations]
          *     parameters:
          *       - in: path
-         *         name: userId
+         *         name: userName
          *         required: true
          *         schema:
-         *           type: integer
-         *         example: 1
+         *           type: string
+         *         example: Usuario Estudiante
          *     responses:
          *       200:
          *         description: Inscripciones del usuario
          */
         router.get(
-            "/user/:userId",
+            "/user/:userName",
             asyncHandler(controller.obtenerPorUsuario)
         );
         /**
          * @swagger
-         * /registrations/event/{eventId}:
+         * /registrations/event/{eventTitle}:
          *   get:
          *     summary: Obtener inscripciones por evento
          *     tags: [Registrations]
          *     parameters:
          *       - in: path
-         *         name: eventId
+         *         name: eventTitle
          *         required: true
          *         schema:
-         *           type: integer
-         *         example: 1
+         *           type: string
+         *         example: Next.js Mastery
          *     responses:
          *       200:
          *         description: Inscripciones del evento
          */
         router.get(
-            "/event/:eventId",
+            "/event/:eventTitle",
             asyncHandler(controller.obtenerPorEvento)
         );
         /**

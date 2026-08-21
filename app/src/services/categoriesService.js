@@ -8,6 +8,6 @@ export async function getCategories() {
         }
         return await response.json();
     } catch (error) {
-        throw new Error("No se pudieron cargar las categorías.");
+        throw new Error("No se pudieron cargar las categorías.", { cause: error });
     }
 }

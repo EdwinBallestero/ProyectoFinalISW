@@ -14,12 +14,12 @@ import {
   Hash,
 } from "lucide-react";
 
-import { eventSchema } from "../schemas/eventSchema";
-import { FormError } from "./FormError";
+import { eventSchema } from "@/schemas/eventSchema";
+import { FormError } from "@/components/FormError";
 
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "@/components/ui/card";
 
 import {
   Select,
@@ -35,9 +35,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "@/components/ui/select";
 
-import { Badge } from "./ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { useState } from "react"
 
 

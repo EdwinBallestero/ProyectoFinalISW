@@ -14,7 +14,7 @@ export function EventCard({ event }) {
     const URL = import.meta.env.VITE_IMAGE_URL
     return (
         <Card className="relative group overflow-hidden border-border bg-card text-card-foreground hover:border-primary/50 hover:shadow-xl transition-all duration-300">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative h-48 w-full overflow-hidden bg-muted">
                 <img
                     src={`${URL}/${event.imageUrl}?width=300&height=200&resize=contain`}
@@ -57,9 +57,11 @@ export function EventCard({ event }) {
 
 EventCard.propTypes = {
     event: PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
         location: PropTypes.string.isRequired,
+        imageUrl: PropTypes.string,
     }).isRequired,
 };
 

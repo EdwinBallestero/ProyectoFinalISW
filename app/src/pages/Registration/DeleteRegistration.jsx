@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import { AlertTriangle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -57,3 +58,23 @@ export function DeleteRegistration({ registration, open, onOpenChange, onDeleted
 		</Dialog>
 	);
 }
+
+DeleteRegistration.propTypes = {
+	registration: PropTypes.shape({
+		eventId: PropTypes.number,
+		userId: PropTypes.number,
+		statusId: PropTypes.number,
+		event: PropTypes.shape({
+			title: PropTypes.string,
+		}),
+		user: PropTypes.shape({
+			fullName: PropTypes.string,
+		}),
+		status: PropTypes.shape({
+			name: PropTypes.string,
+		}),
+	}),
+	open: PropTypes.bool.isRequired,
+	onOpenChange: PropTypes.func.isRequired,
+	onDeleted: PropTypes.func.isRequired,
+};

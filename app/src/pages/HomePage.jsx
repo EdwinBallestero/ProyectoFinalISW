@@ -1,11 +1,14 @@
 import { CalendarDays, ArrowRight, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 
 export function HomePage() {
+    const navigate = useNavigate();
+
     return (
-        <section className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-background via-background to-primary/10 p-6 md:p-10">
+        <section className="relative overflow-hidden rounded-3xl border bg-linear-to-br from-background via-background to-primary/10 p-6 md:p-10">
             <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
             <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-secondary/30 blur-3xl" />
 
@@ -30,14 +33,18 @@ export function HomePage() {
                         </div>
 
                         <div className="flex flex-col gap-3 sm:flex-row">
-                            <Button size="lg" className="group">
-                                Ver eventos
+                            <Button size="lg" className="group" onClick={() => navigate("/events")}>
+                                Eventos
                                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                             </Button>
-
-                            <Button size="lg" variant="outline">
-                                Crear evento
+                            <Button size="lg" className="group" onClick={() => navigate("/registrations", { state: { openCreate: true } })}>
+                                Inscribete
+                                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                             </Button>
+                            {/*<Button size="lg" className="group" onClick={() => navigate("/create")}>
+                                Crear evento
+                                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </Button>*/}
                         </div>
                     </div>
 
