@@ -10,6 +10,8 @@ import {
 	getRegistrationUsers,
 } from "@/services/registrationsService";
 
+const DEFAULT_STATUS_ID = 3;
+
 export function CreateRegistration({ open, onOpenChange, onCreated }) {
 	const [events, setEvents] = useState([]);
 	const [users, setUsers] = useState([]);
@@ -17,7 +19,7 @@ export function CreateRegistration({ open, onOpenChange, onCreated }) {
 	const [loading, setLoading] = useState(false);
 	const [submitting, setSubmitting] = useState(false);
 	const [loadError, setLoadError] = useState("");
-	const [statusId, setStatusId] = useState("");
+
 
 	useEffect(() => {
 		if (!open) {
@@ -41,9 +43,8 @@ export function CreateRegistration({ open, onOpenChange, onCreated }) {
 
 				setEvents(eventsResponse?.data ?? eventsResponse ?? []);
 				setUsers(usersResponse?.data ?? usersResponse ?? []);
-				const availableStatuses = statusesResponse?.data ?? statusesResponse ?? [];
-				setStatuses(availableStatuses);
-				setStatusId(String(availableStatuses.find((status) => status.id === 1)?.id ?? availableStatuses[0]?.id ?? ""));
+				setStatuses(statusesResponse?.data ?? statusesResponse ?? []);
+				
 			} catch (error) {
 				if (active) {
 					setLoadError(error.message);
@@ -71,7 +72,7 @@ export function CreateRegistration({ open, onOpenChange, onCreated }) {
 		const registration = {
 			eventId: Number(formData.eventId),
 			userId: Number(formData.userId),
-			statusId: Number(formData.statusId),
+			statusId: DEFAULT_STATUS_ID,
 		};
 
 		try {
@@ -101,8 +102,7 @@ export function CreateRegistration({ open, onOpenChange, onCreated }) {
 						events={events}
 						users={users}
 						statuses={statuses}
-						statusId={statusId}
-						onStatusChange={setStatusId}
+						defaultStatusId={DEFAULT_STATUS_ID}
 						loading={loading}
 						submitting={submitting}
 						onSubmit={handleSubmit}
