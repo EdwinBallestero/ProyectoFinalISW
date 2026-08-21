@@ -108,7 +108,7 @@ export function RegistrationPage() {
                 loading={loading}
                 onView={openDetails}
                 onUpdate={openUpdate}
-                createLabel="Crear registro"
+                createLabel="Nueva inscripción"
                 onCreate={() => setCreateOpen(true)}
                 onDelete={(registration) => {
                     setSelectedRegistration(registration);
