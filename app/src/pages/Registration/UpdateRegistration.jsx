@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { UpdateRegistrationForm } from "@/components/Registrations/UpdateRegistrationForm";
 import { getRegistrationStatuses, updateRegistration } from "@/services/registrationsService";
 
 export function UpdateRegistration({ registration, open, onOpenChange, onUpdated }) {
@@ -81,34 +82,34 @@ export function UpdateRegistration({ registration, open, onOpenChange, onUpdated
 				{loadError ? (
 					<p className="text-sm text-destructive">{loadError}</p>
 				) : (
-					<form className="space-y-4" onSubmit={handleSubmit}>
-						<label className="block space-y-1 text-sm font-medium">
-							Estado de inscripción
-							<select
-								className="h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm"
-								value={statusId}
-								onChange={(event) => setStatusId(event.target.value)}
-								disabled={loading || submitting || statuses.length === 0}
-								required
-							>
-								{loading ? (
-									<option>Cargando estados...</option>
-								) : (
-									statuses.map((status) => (
-										<option key={status.id} value={status.id}>{status.name}</option>
-									))
-								)}
-							</select>
-						</label>
-						<DialogFooter>
-							<Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
-							<Button type="submit" disabled={loading || submitting || statuses.length === 0}>
-								{submitting ? "Guardando..." : "Guardar cambios"}
-							</Button>
-						</DialogFooter>
-					</form>
+					<UpdateRegistrationForm
+						statuses={statuses}
+						statusId={statusId}
+						onStatusChange={setStatusId}
+						loading={loading}
+						submitting={submitting}
+						onSubmit={handleSubmit}
+						onCancel={() => onOpenChange(false)}
+					/>
 				)}
 			</DialogContent>
 		</Dialog>
 	);
 }
+
+UpdateRegistration.propTypes = {
+	registration: PropTypes.shape({
+		eventId: PropTypes.number,
+		userId: PropTypes.number,
+		statusId: PropTypes.number,
+		event: PropTypes.shape({
+			title: PropTypes.string,
+		}),
+		user: PropTypes.shape({
+			fullName: PropTypes.string,
+		}),
+	}),
+	open: PropTypes.bool.isRequired,
+	onOpenChange: PropTypes.func.isRequired,
+	onUpdated: PropTypes.func.isRequired,
+};

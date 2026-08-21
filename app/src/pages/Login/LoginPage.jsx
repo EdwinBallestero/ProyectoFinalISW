@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ArrowRight, CalendarDays, Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginUser } from "@/services/loginService/loginService";
+import logo from "@/assets/techevents_logo.png";
 
 export function LoginPage() {
 	const navigate = useNavigate();
@@ -32,24 +33,17 @@ export function LoginPage() {
 	return (
 		<main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/15 px-4 py-10">
 			<section className="grid w-full max-w-4xl overflow-hidden rounded-3xl border border-border/70 bg-card shadow-xl md:grid-cols-[0.9fr_1.1fr]">
-				<div className="hidden flex-col justify-between bg-primary p-10 text-primary-foreground md:flex">
-					<div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15">
-						<CalendarDays className="h-6 w-6" />
+				<div className="hidden flex-col justify-start bg-primary p-10 text-primary-foreground md:flex">
+					<div className="-mx-9">
+						<img src={logo} alt="TechEvents CR Logo" className="w-full h-auto object-cover" />
 					</div>
-					<div>
-						<p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-primary-foreground/70">EventUTN</p>
-						<h1 className="text-4xl font-bold leading-tight">Tus eventos, en un solo lugar.</h1>
-						<p className="mt-4 text-primary-foreground/75">Ingresa para descubrir actividades, gestionar eventos e inscribirte.</p>
+					<div className="mt-3">
+						<h1 className="text-xl font-bold leading-tight">Tus eventos, en un solo lugar.</h1>
+						<p className="mt-4 text-sm leading-tight">Ingresa para descubrir diferentes actividades e inscribirte a tus eventos favoritos.</p>
 					</div>
 				</div>
 
 				<div className="p-6 sm:p-10">
-					<div className="mb-8 md:hidden">
-						<div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-							<CalendarDays className="h-6 w-6" />
-						</div>
-						<p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">EventUTN</p>
-					</div>
 					<div className="mb-8 space-y-2">
 						<h2 className="text-3xl font-bold tracking-tight">Bienvenido</h2>
 						<p className="text-muted-foreground">Ingresa con tu cuenta para continuar.</p>

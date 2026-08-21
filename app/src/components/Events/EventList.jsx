@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { EventCard } from "./EventCard";
+import { EventCard } from "@/components/Events/EventCard";
 
 export function EventList({ events }) {
         return (

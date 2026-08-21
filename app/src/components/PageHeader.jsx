@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import PropTypes from "prop-types";
 export function PageHeader({ title, description, isBadge = false }) {
     return (
         <div className="mb-10 space-y-2">
@@ -23,3 +24,9 @@ export function PageHeader({ title, description, isBadge = false }) {
         </div>
     );
 }
+
+PageHeader.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    isBadge: PropTypes.bool,
+};

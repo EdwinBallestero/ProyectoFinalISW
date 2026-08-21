@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-import { CalendarDays, Clock3, Eye, Info, Mail, MapPin, Pencil, Plus, Ticket, UserRound } from "lucide-react";
+import { CalendarDays, Clock3, Info, Mail, MapPin, Pencil, Ticket, UserRound } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+//import { ListToolbar } from "@/components/ListToolbar";
 import { CreateRegistration } from "./CreateRegistration";
 import { DeleteRegistration } from "./DeleteRegistration";
-import { GetAllRegistration } from "./GetAllRegistration";
+import { RegistrationList } from "@/components/Registrations/RegistrationList";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { UpdateRegistration } from "./UpdateRegistration";
-import {
-    getRegistrationsByEvent,
-    getRegistrationsByUser,
-    getRegistrations,
-} from "@/services/registrationsService";
+import { getRegistrations } from "@/services/registrationsService";
+import { SearchBar } from "@/components/SearchBar";
 
 function formatDate(value) {
     if (!value) {
@@ -29,49 +27,56 @@ function formatDate(value) {
 }
 
 export function RegistrationPage() {
+    const location = useLocation();
     const [registrations, setRegistrations] = useState([]);
     const [selectedRegistration, setSelectedRegistration] = useState(null);
     const [dialog, setDialog] = useState(null);
     const [createOpen, setCreateOpen] = useState(false);
     const [registrationSearch, setRegistrationSearch] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
+    
     async function loadRegistrations() {
         try {
             setLoading(true);
             const response = await getRegistrations();
-            setRegistrations(response?.data ?? response ?? []);
+                setRegistrations(response?.data ?? response ?? []);
         } catch (error) {
             toast.error(error.message);
+            setError(error);
         } finally {
             setLoading(false);
         }
     }
-
-    useEffect(() => {
+    useEffect(() => {    
         loadRegistrations();
     }, []);
 
-    async function handleGetByName(type) {
-        if (!registrationSearch.trim()) {
-            toast.error(`Ingrese el nombre del ${type === "event" ? "evento" : "usuario"}.`);
-            return;
+    useEffect(() => {
+        if (location.state?.openCreate) {
+            setCreateOpen(true);
+            window.history.replaceState({}, "");
         }
-        try {
-            const response = type === "event"
-                ? await getRegistrationsByEvent(registrationSearch.trim())
-                : await getRegistrationsByUser(registrationSearch.trim());
-            const data = response?.data ?? response ?? [];
-            const registrationsFound = Array.isArray(data) ? data : [data];
-            if (registrationsFound.length === 0) {
-                toast.error("No se encontraron inscripciones.");
-                return;
-            }
-            setRegistrations(registrationsFound);
-            setSelectedRegistration(registrationsFound[0]);
-        } catch (error) {
-            toast.error(error.message);
-        }
+    }, [location.state]);
+
+    const filteredRegistrations = registrations.filter((registration) =>
+        (registration.event?.title ?? "").toLowerCase().includes(registrationSearch.toLowerCase()) ||
+        (registration.user?.fullName ?? "").toLowerCase().includes(registrationSearch.toLowerCase())
+    );
+    if (loading) {
+        return (
+            <p className="text-center text-muted-foreground">
+                Cargando inscripciones...
+            </p>
+        );
+    }
+    if (error) {
+        return (
+            <Alert variant="destructive">
+                <AlertDescription>{error?.message ?? "Ocurrió un error."}</AlertDescription>
+            </Alert>
+        );
     }
 
     function openUpdate(registration) {
@@ -88,42 +93,23 @@ export function RegistrationPage() {
         <section className="space-y-6">
             <PageHeader
                 title="Inscripciones"
-                description="Administre las inscripciones a los eventos desde un solo lugar."
+                description={filteredRegistrations.length}
+                isBadge={true}
             />
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>Acciones de mantenimiento</CardTitle>
-                    <CardDescription>Consulte, cree, actualice o elimine inscripciones.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <div className="flex flex-1 gap-2">
-                        <Input
-                            value={registrationSearch}
-                            onChange={(event) => setRegistrationSearch(event.target.value)}
-                            type="search"
-                            placeholder="Nombre de evento o usuario"
-                            aria-label="Nombre de evento o usuario"
-                        />
-                        <Button variant="outline" onClick={() => handleGetByName("event")}>
-                            <Eye /> Por evento
-                        </Button>
-                        <Button variant="outline" onClick={() => handleGetByName("user")}>
-                            <Eye /> Por usuario
-                        </Button>
-                    </div>
-                    <Button onClick={() => setCreateOpen(true)}>
-                        <Plus /> Crear registro
-                    </Button>
-                </CardContent>
-            </Card>
+            <SearchBar
+                value={registrationSearch}
+                onChange={setRegistrationSearch}
+                placeholder="Buscar por evento o usuario"
+            />
 
-            <GetAllRegistration
-                registrations={registrations}
+            <RegistrationList
+                registrations={filteredRegistrations}
                 loading={loading}
-                onRefresh={loadRegistrations}
                 onView={openDetails}
                 onUpdate={openUpdate}
+                createLabel="Crear registro"
+                onCreate={() => setCreateOpen(true)}
                 onDelete={(registration) => {
                     setSelectedRegistration(registration);
                     setDialog("delete");

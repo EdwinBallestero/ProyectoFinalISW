@@ -32,12 +32,12 @@ export async function loginUser(credentials) {
 		body: JSON.stringify(credentials),
 	});
 
-	localStorage.setItem(TOKEN_KEY, response.data.token);
+	sessionStorage.setItem(TOKEN_KEY, response.data.token);
 	return response.data;
 }
 
 export function getAuthToken() {
-	return localStorage.getItem(TOKEN_KEY);
+	return sessionStorage.getItem(TOKEN_KEY);
 }
 
 export function isAuthenticated() {
@@ -45,5 +45,5 @@ export function isAuthenticated() {
 }
 
 export function logoutUser() {
-	localStorage.removeItem(TOKEN_KEY);
+	sessionStorage.removeItem(TOKEN_KEY);
 }

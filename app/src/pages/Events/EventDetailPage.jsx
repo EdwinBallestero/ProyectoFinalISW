@@ -9,16 +9,16 @@ import {
     Building2,
     Monitor
 } from "lucide-react";
-import { PageHeader } from "../components/PageHeader";
-import { Button } from "../components/ui/button";
+import { PageHeader } from "@/components/PageHeader";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
     CardHeader,
     CardTitle
-} from "../components/ui/card";
-import { Alert } from "../components/ui/alert";
-import { getEventById } from "../services/eventsService";
+} from "@/components/ui/card";
+import { Alert } from "@/components/ui/alert";
+import { getEventById } from "@/services/eventsService";
 const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 export function EventDetailPage() {
     const { id } = useParams();

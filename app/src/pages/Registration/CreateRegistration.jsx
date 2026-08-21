@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { RegistrationForm } from "@/components/Registrations/RegistrationForm";
 import {
 	createRegistration,
 	getRegistrationEvents,
@@ -97,34 +97,17 @@ export function CreateRegistration({ open, onOpenChange, onCreated }) {
 				{loadError ? (
 					<p className="text-sm text-destructive">{loadError}</p>
 				) : (
-				<form className="space-y-4" onSubmit={handleSubmit}>
-					<label className="block space-y-1 text-sm font-medium">
-						Evento
-						<select name="eventId" className="h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm" required disabled={loading || events.length === 0} defaultValue="">
-							<option value="" disabled>{loading ? "Cargando eventos..." : "Seleccione un evento"}</option>
-							{events.map((eventItem) => <option key={eventItem.id} value={eventItem.id}>{eventItem.title}</option>)}
-						</select>
-					</label>
-					<label className="block space-y-1 text-sm font-medium">
-						Usuario
-						<select name="userId" className="h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm" required disabled={loading || users.length === 0} defaultValue="">
-							<option value="" disabled>{loading ? "Cargando usuarios..." : "Seleccione un usuario"}</option>
-							{users.map((user) => <option key={user.id} value={user.id}>{user.fullName} ({user.email})</option>)}
-						</select>
-					</label>
-					<label className="block space-y-1 text-sm font-medium">
-						Estado
-						<select name="statusId" className="h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm" required disabled={loading || statuses.length === 0} value={statusId} onChange={(event) => setStatusId(event.target.value)}>
-							{statuses.map((status) => <option key={status.id} value={status.id}>{status.name}</option>)}
-						</select>
-					</label>
-					<DialogFooter>
-						<Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
-						<Button type="submit" disabled={loading || submitting || events.length === 0 || users.length === 0 || statuses.length === 0}>
-							{submitting ? "Creando..." : "Crear"}
-						</Button>
-					</DialogFooter>
-				</form>
+					<RegistrationForm
+						events={events}
+						users={users}
+						statuses={statuses}
+						statusId={statusId}
+						onStatusChange={setStatusId}
+						loading={loading}
+						submitting={submitting}
+						onSubmit={handleSubmit}
+						onCancel={() => onOpenChange(false)}
+					/>
 				)}
 			</DialogContent>
 		</Dialog>
