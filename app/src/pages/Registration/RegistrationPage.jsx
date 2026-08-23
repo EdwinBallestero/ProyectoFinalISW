@@ -164,7 +164,7 @@ export function RegistrationPage() {
 
                     <DialogFooter>
                         <Button type="button" variant="outline" onClick={() => setDialog(null)}>Cerrar</Button>
-                        <Button type="button" onClick={() => openUpdate(selectedRegistration)}><Pencil /> Actualizar estado</Button>
+                        {/* <Button type="button" onClick={() => openUpdate(selectedRegistration)}><Pencil /> Actualizar estado</Button> */}
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
